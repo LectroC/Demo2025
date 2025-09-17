@@ -1,0 +1,62 @@
+<header class="app-header">
+  <h1>Snippet Share</h1>
+  <div class="subtitle">Share, view, and highlight code instantly</div>
+  </header>
+
+<main class="container">
+  <section class="composer">
+    <div class="field">
+      <label>Title</label>
+      <input type="text" ng-model="vm.form.title" placeholder="Descriptive title" />
+    </div>
+    <div class="field">
+      <label>Language</label>
+      <select ng-model="vm.form.language" ng-options="lang for lang in vm.languages"></select>
+    </div>
+    <div class="field">
+      <label>Code</label>
+      <textarea ng-model="vm.form.code" rows="10" placeholder="Paste your code here..."></textarea>
+    </div>
+    <div class="actions">
+      <button ng-click="vm.create()" ng-disabled="!vm.form.title || !vm.form.code">Share Snippet</button>
+    </div>
+  </section>
+
+  <section class="list" ng-if="vm.snippetsAll.length">
+    <h2>Latest Snippets</h2>
+    <div class="snippet" ng-repeat="s in vm.snippetsAll | orderBy:'-createdAt' track by s.id">
+      <div class="snippet-header">
+        <h3>{{s.title}}</h3>
+        <span class="lang">{{s.language}}</span>
+        <button class="delete" ng-click="vm.remove(s.id)">Delete</button>
+      </div>
+      <pre class="code-block"><code class="language-{{vm.prismAlias(s.language)}}" ng-bind-html="vm.highlight(s)"></code></pre>
+    </div>
+  </section>
+
+  <section class="list">
+    <h2>Guest Snippets</h2>
+    <div class="snippet" ng-repeat="s in vm.snippetsGuest | orderBy:'-createdAt' track by s.id">
+      <div class="snippet-header">
+        <h3>{{s.title}}</h3>
+        <span class="lang">{{s.language}}</span>
+        <button class="delete" ng-click="vm.remove(s.id)">Delete</button>
+      </div>
+      <pre class="code-block"><code class="language-{{vm.prismAlias(s.language)}}" ng-bind-html="vm.highlight(s)"></code></pre>
+    </div>
+  </section>
+
+  <section class="list" ng-if="vm.snippetsUser.length">
+    <h2>Your Snippets</h2>
+    <div class="snippet" ng-repeat="s in vm.snippetsUser | orderBy:'-createdAt' track by s.id">
+      <div class="snippet-header">
+        <h3>{{s.title}}</h3>
+        <span class="lang">{{s.language}}</span>
+        <button class="delete" ng-click="vm.remove(s.id)">Delete</button>
+      </div>
+      <pre class="code-block"><code class="language-{{vm.prismAlias(s.language)}}" ng-bind-html="vm.highlight(s)"></code></pre>
+    </div>
+  </section>
+</main>
+
+

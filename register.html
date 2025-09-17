@@ -1,0 +1,19 @@
+<main class="container full-center">
+  <section class="composer">
+    <h2 style="text-align:center;color:#fff">Register</h2>
+    <div class="field">
+      <label>Name</label>
+      <input type="text" ng-model="vm.form.name" placeholder="Enter your name" />
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" ng-model="vm.form.password" placeholder="Enter password" />
+    </div>
+    <div class="actions center">
+      <button ng-click="vm.register()">Create account</button>
+      <a class="btn" href="#/login">Back to Login</a>
+    </div>
+  </section>
+</main>
+
+
