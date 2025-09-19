@@ -1,0 +1,99 @@
+<header class="app-header">
+  <h1>Snippet Share</h1>
+  <div class="subtitle">Share, view, and highlight code instantly</div>
+  </header>
+
+<main class="container">
+  <section class="composer">
+    <div class="field">
+      <label>Title</label>
+      <input type="text" ng-model="vm.form.title" placeholder="Descriptive title" />
+    </div>
+    <div class="field">
+      <label>Language</label>
+      <select ng-model="vm.form.language" ng-options="lang for lang in vm.languages"></select>
+    </div>
+    <div class="field">
+      <label>Code</label>
+      <textarea ng-model="vm.form.code" rows="10" placeholder="Paste your code here..."></textarea>
+    </div>
+    <div class="actions">
+      <button ng-click="vm.create()" ng-disabled="!vm.form.title || !vm.form.code" ng-if="!vm.editingSnippet">Add Snippet</button>
+      <button ng-click="vm.openShareMenu()" ng-disabled="!vm.form.title || !vm.form.code" ng-if="vm.isLoggedIn && !vm.editingSnippet">Share Snippet</button>
+      <button ng-click="vm.updateSnippet()" ng-disabled="!vm.form.title || !vm.form.code" ng-if="vm.editingSnippet">Update Snippet</button>
+      <button ng-click="vm.cancelEdit()" ng-if="vm.editingSnippet">Cancel Edit</button>
+    </div>
+
+    <div class="field" ng-if="vm.showShareMenu">
+      <label>Share with users</label>
+      <select multiple ng-model="vm.share.selected" ng-options="u for u in vm.share.users"></select>
+      <div class="actions">
+        <button ng-click="vm.performShare()" ng-disabled="!vm.share.selected.length">Share</button>
+        <button class="delete" ng-click="vm.cancelShare()">Cancel</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="list" ng-if="!vm.isLoggedIn && vm.snippetsAll.length">
+    <h2>Latest Snippets</h2>
+    <div class="snippet" ng-repeat="s in vm.snippetsAll | orderBy:'-createdAt' track by s.id">
+      <div class="snippet-header">
+        <h3>{{s.title}}</h3>
+        <span class="lang">{{s.language}}</span>
+        <button class="delete" ng-click="vm.remove(s.id)">Delete</button>
+        <button class="edit" ng-click="vm.editSnippet(s)">Edit Snippet</button>
+        <button class="edit" ng-click="vm.openShareFor(s)" ng-if="vm.isLoggedIn">Share</button>
+        <button class="edit" ng-click="vm.copyCode(s)">Copy</button>
+        <button class="edit" ng-click="vm.downloadCode(s)">Download</button>
+      </div>
+      <pre class="code-block"><code class="language-{{vm.prismAlias(s.language)}}" ng-bind-html="vm.highlight(s)"></code></pre>
+    </div>
+  </section>
+
+  <section class="list" ng-if="!vm.isLoggedIn">
+    <h2>Guest Snippets</h2>
+    <div class="snippet" ng-repeat="s in vm.snippetsGuest | orderBy:'-createdAt' track by s.id">
+      <div class="snippet-header">
+        <h3>{{s.title}}</h3>
+        <span class="lang">{{s.language}}</span>
+        <button class="delete" ng-click="vm.remove(s.id)">Delete</button>
+        <button class="edit" ng-click="vm.editSnippet(s)">Edit Snippet</button>
+      </div>
+      <pre class="code-block"><code class="language-{{vm.prismAlias(s.language)}}" ng-bind-html="vm.highlight(s)"></code></pre>
+    </div>
+  </section>
+
+  <section class="list" ng-if="vm.snippetsUser.length">
+    <h2>Your Snippets</h2>
+    <div class="snippet" ng-repeat="s in vm.snippetsUser | orderBy:'-createdAt' track by s.id">
+      <div class="snippet-header">
+        <h3>{{s.title}}</h3>
+        <span class="lang">{{s.language}}</span>
+        <button class="delete" ng-click="vm.remove(s.id)">Delete</button>
+        <button class="edit" ng-click="vm.editSnippet(s)">Edit Snippet</button>
+        <button class="edit" ng-click="vm.openShareFor(s)">Share</button>
+        <button class="edit" ng-click="vm.copyCode(s)">Copy</button>
+        <button class="edit" ng-click="vm.downloadCode(s)">Download</button>
+      </div>
+      <pre class="code-block"><code class="language-{{vm.prismAlias(s.language)}}" ng-bind-html="vm.highlight(s)"></code></pre>
+    </div>
+  </section>
+
+  <section class="list" ng-if="vm.snippetsShared.length">
+    <h2>Shared Snippets</h2>
+    <div class="snippet" ng-repeat="s in vm.snippetsShared | orderBy:'-createdAt' track by s.id">
+      <div class="snippet-header">
+        <h3>{{s.title}}</h3>
+        <span class="lang">{{s.language}}</span>
+        <span class="shared-by">Shared by: {{s.sharedBy}}</span>
+        <button class="edit" ng-click="vm.editSnippet(s)">Edit Snippet</button>
+        <button class="edit" ng-click="vm.openShareFor(s)">Share</button>
+        <button class="edit" ng-click="vm.copyCode(s)">Copy</button>
+        <button class="edit" ng-click="vm.downloadCode(s)">Download</button>
+      </div>
+      <pre class="code-block"><code class="language-{{vm.prismAlias(s.language)}}" ng-bind-html="vm.highlight(s)"></code></pre>
+    </div>
+  </section>
+</main>
+
+
