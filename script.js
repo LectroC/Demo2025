@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const label2Container = document.getElementById("label2-container");
   const label3Container = document.getElementById("label3-container");
 
-  // Function to show/hide fields based on dropdown
+  // ✅ Function to show/hide fields based on dropdown
   function updateVisibleFields() {
     const selectedValue = fieldSelect.value;
 
@@ -15,27 +15,28 @@ document.addEventListener("DOMContentLoaded", function () {
     label2Container.style.display = "none";
     label3Container.style.display = "none";
 
+    // Show fields depending on selection
     if (selectedValue === "label1") {
-      label1Container.style.display = "block";
+      label1Container.style.display = "grid";
     } else if (selectedValue === "label2") {
-      label2Container.style.display = "block";
+      label2Container.style.display = "grid";
     } else if (selectedValue === "label12") {
-      label1Container.style.display = "block";
-      label2Container.style.display = "block";
+      label1Container.style.display = "grid";
+      label2Container.style.display = "grid";
     } else if (selectedValue === "all") {
-      label1Container.style.display = "block";
-      label2Container.style.display = "block";
-      label3Container.style.display = "block";
+      label1Container.style.display = "grid";
+      label2Container.style.display = "grid";
+      label3Container.style.display = "grid";
     }
   }
 
-  // Initial setup
+  // ✅ Run once on page load
   updateVisibleFields();
 
-  // Update fields when selection changes
+  // ✅ Update fields when selection changes
   fieldSelect.addEventListener("change", updateVisibleFields);
 
-  // Handle form submission
+  // ✅ Handle form submission
   form.addEventListener("submit", function (e) {
     e.preventDefault();
 
@@ -45,8 +46,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Store values in variables (example usage)
     const storedValues = { val1, val2, val3 };
-
     console.log("Stored values:", storedValues);
     alert("Values stored successfully!");
+  });
+
+  // ✅ 🌙 Dark mode toggle
+  const toggleBtn = document.getElementById("theme-toggle");
+  toggleBtn.addEventListener("click", function () {
+    document.body.classList.toggle("dark-mode");
+
+    // Change button text/icon dynamically
+    if (document.body.classList.contains("dark-mode")) {
+      toggleBtn.textContent = "☀️ Light Mode";
+    } else {
+      toggleBtn.textContent = "🌙 Dark Mode";
+    }
   });
 });
