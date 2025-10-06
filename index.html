@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Anypoint MQ</title>
+
+  <!-- Favicon (MuleSoft logo) -->
+  <link rel="icon" type="image/svg+xml" href="mule_logo_converted.svg" />
+
+  <!-- Link to CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>Anypoint MQ</h1>
+  </header>
+
+  <main>
+    <div class="form-container">
+      <label for="fieldSelect" class="dropdown-label">Select Fields to Display:</label>
+      <select id="fieldSelect">
+        <option value="label1">Queue only</option>
+        <option value="label2">Exchange only</option>
+        <option value="label12">Queue & Exchange</option>
+        <option value="all">All</option>
+      </select>
+
+      <form id="inputForm">
+        <div id="label1-container" class="input-group">
+          <label for="label1">Enter Queue name:</label>
+          <input type="text" id="label1" name="label1" />
+        </div>
+
+        <div id="label2-container" class="input-group">
+          <label for="label2">Enter Exchange name:</label>
+          <input type="text" id="label2" name="label2" />
+        </div>
+
+        <div id="label3-container" class="input-group">
+          <label for="label3">Enter DLQ name:</label>
+          <input type="text" id="label3" name="label3" />
+        </div>
+
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </main>
+
+  <!-- Link to JS -->
+  <script src="script.js"></script>
+</body>
+</html>
